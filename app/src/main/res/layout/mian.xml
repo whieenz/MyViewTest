@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <com.whieenz.myviewtest.PView
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:id="@+id/pv_1"
+        android:layout_height="50dp" />
+    <com.whieenz.myviewtest.PView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/pv_2" />
+    <com.whieenz.myviewtest.PView
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:id="@+id/pv_3"
+        />
+    <com.whieenz.myviewtest.PView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/pv_4"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:onClick="add"
+            android:text="+"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_0"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:onClick="sub"
+            android:text="-"/>
+
+    </LinearLayout>
+
+</LinearLayout>
