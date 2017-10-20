@@ -27,8 +27,7 @@
     <com.whieenz.myviewtest.ThreeStepProgressView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/tsp"
-        android:background="#eee"/>
+        android:id="@+id/tsp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

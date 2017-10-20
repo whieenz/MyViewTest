@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
         pView3 = (PView) findViewById(R.id.pv_3);
         pView4 = (PView) findViewById(R.id.pv_4);
         tsp = (ThreeStepProgressView) findViewById(R.id.tsp);
-        List<String> strings = new ArrayList<>();
-        strings.add("盒子问");
-        strings.add("海贼团");
-        strings.add("五彩池");
-        tsp.setStepInfo(strings);
-        tsp.setStepNum(2);
+//        List<String> strings = new ArrayList<>();
+//        strings.add("盒子问");
+//        strings.add("海贼团");
+//        strings.add("五彩池");
+//        tsp.setStepInfo(strings);
+//        tsp.setStepNum(2);
         editText = (EditText) findViewById(R.id.tv_0);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,18 +73,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void add(View view){
-       pView1.setProgress((float) (pView1.getProgress()+0.1));
-       pView2.setProgress((float) (pView2.getProgress()+0.1));
-       pView3.setProgress((float) (pView3.getProgress()+0.1));
-       pView4.setProgress((float) (pView4.getProgress()+0.1));
+    public void add(View view) {
+        pView1.setProgress((float) (pView1.getProgress() + 0.1));
+        pView2.setProgress((float) (pView2.getProgress() + 0.1));
+        pView3.setProgress((float) (pView3.getProgress() + 0.1));
+        pView4.setProgress((float) (pView4.getProgress() + 0.1));
+        tsp.setStepNum(tsp.getStepNum() + 1);
+        tsp.invalidate();
     }
-    public void sub(View view){
-        pView1.setProgress((float) (pView1.getProgress()-0.1));
-        pView2.setProgress((float) (pView2.getProgress()-0.1));
-        pView3.setProgress((float) (pView3.getProgress()-0.1));
-        pView4.setProgress((float) (pView4.getProgress()-0.1));
+
+    public void sub(View view) {
+        pView1.setProgress((float) (pView1.getProgress() - 0.1));
+        pView2.setProgress((float) (pView2.getProgress() - 0.1));
+        pView3.setProgress((float) (pView3.getProgress() - 0.1));
+        pView4.setProgress((float) (pView4.getProgress() - 0.1));
+        tsp.setStepNum(tsp.getStepNum() - 1);
+        tsp.invalidate();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
