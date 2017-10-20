@@ -18,39 +18,40 @@ import java.util.List;
 
 public class ThreeStepProgressView extends View {
 
-    private int min = Color.parseColor("#FF7F00");
-    private int max = Color.parseColor("#00B2EE");
+    private int light = Color.parseColor("#Ff4444");
+    private int grey = Color.parseColor("#bebebe");
     private int width;
     private int height;
     private int stepNum;
     private List<String> stepInfo;
     // 1.创建一个画笔
-    private Paint mPaint = new Paint();
-    private Paint mPaint1 = new Paint();
+    private Paint retPaint = new Paint();
+    private Paint linePaint = new Paint();
     Paint textPaint = new Paint();          // 创建画笔
 
     // 2.初始化画笔
     private void initPaint() {
-        mPaint.setColor(Color.parseColor("#bebebe"));       //设置画笔颜色
-        mPaint.setStyle(Paint.Style.STROKE);  //设置画笔模式为填充
-        mPaint.setStrokeWidth(3f);         //设置画笔宽度为10px
-        mPaint.setAntiAlias(true);         //设置抗锯齿
+        retPaint.setColor(light);       //设置画笔颜色
+        retPaint.setStyle(Paint.Style.STROKE);  //设置画笔模式为填充
+        retPaint.setStrokeWidth(4f);         //设置画笔宽度为10px
+        retPaint.setAntiAlias(true);         //设置抗锯齿
 
-        mPaint1.setColor(Color.parseColor("#bebebe"));       //设置画笔颜色
-        mPaint1.setStyle(Paint.Style.FILL_AND_STROKE);  //设置画笔模式为填充
+        linePaint.setColor(grey);       //设置画笔颜色
+        linePaint.setStyle(Paint.Style.FILL_AND_STROKE);  //设置画笔模式为填充
 
-        textPaint.setColor(Color.parseColor("#bebebe"));        // 设置颜色
+        textPaint.setColor(light);        // 设置颜色
         textPaint.setStyle(Paint.Style.FILL);   // 设置样式
-        textPaint.setTextSize(25);              // 设置字体大小
+        textPaint.setTextSize(height / 4);
 
     }
+
     public ThreeStepProgressView(Context context) {
         super(context);
     }
 
     public ThreeStepProgressView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initPaint();
+
     }
 
     public ThreeStepProgressView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -67,6 +68,22 @@ public class ThreeStepProgressView extends View {
         int heightmode = MeasureSpec.getMode(heightMeasureSpec);    //取出高度的测量模式
     }
 
+    public int getStepNum() {
+        return stepNum;
+    }
+
+    public void setStepNum(int stepNum) {
+        this.stepNum = stepNum;
+    }
+
+    public List<String> getStepInfo() {
+        return stepInfo;
+    }
+
+    public void setStepInfo(List<String> stepInfo) {
+        this.stepInfo = stepInfo;
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
@@ -77,19 +94,68 @@ public class ThreeStepProgressView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        initPaint();
         // 第一种
+        int padding = 10;
+        int firstBaseLine = height / 3;
+        int textBaseLine = height * 3 / 4;
         int lineWidth = height / 8;
         int minRadius = height / 8;
-        int maxRadius = height / 8;
-        canvas.drawCircle(10+height/8,height/4,minRadius,mPaint);
-        mPaint1.setStrokeWidth(lineWidth);
-        canvas.drawLine(10+height/4,height/4,width/2-minRadius,height/4,mPaint1);
-        canvas.drawCircle(width/2,height/4,minRadius,mPaint);
-        canvas.drawLine(width/2+minRadius,height/4,width-10-minRadius*2,height/4,mPaint1);
-        canvas.drawCircle(width-10-minRadius,height/4,minRadius,mPaint);
+        int maxRadius = height / 7;
+        int firstRadius = minRadius, secondRadius = minRadius, thirdRadius = minRadius, firstStart, firstEnd, secondStart, secondEnd;
+        if (stepNum == 1) {
+            firstRadius = maxRadius;
+        } else if (stepNum == 2) {
+            secondRadius = maxRadius;
+        } else if (stepNum == 3) {
+            thirdRadius = maxRadius;
+        }
+        firstStart = padding + 2 * firstRadius;
+        firstEnd = width / 2 - secondRadius;
+        secondStart = width / 2 + secondRadius;
+        secondEnd = width - padding - 2 * thirdRadius;
+        retPaint.setStrokeWidth(firstRadius/4);
+        canvas.drawCircle(padding + height / 8, firstBaseLine, firstRadius, retPaint);
+        if (stepNum > 1) {
+            linePaint.setColor(light);
+            retPaint.setColor(light);
+        }
+        linePaint.setStrokeWidth(lineWidth);
+        retPaint.setStrokeWidth(secondRadius/4);
+        canvas.drawLine(firstStart, firstBaseLine, firstEnd, firstBaseLine, linePaint);
+        canvas.drawCircle(width / 2, firstBaseLine, secondRadius, retPaint);
+        if (stepNum == 3) {
+            linePaint.setColor(light);
+            retPaint.setColor(light);
+        } else {
+            linePaint.setColor(grey);
+            retPaint.setColor(grey);
+        }
+        retPaint.setStrokeWidth(thirdRadius/4);
+        canvas.drawLine(secondStart, firstBaseLine, secondEnd, firstBaseLine, linePaint);
+        canvas.drawCircle(width - 10 - minRadius, firstBaseLine, thirdRadius, retPaint);
 
+
+
+        textPaint.setTextAlign(Paint.Align.LEFT);
+        canvas.drawText(stepInfo.get(0), padding, textBaseLine, textPaint);
+        textPaint.setTextAlign(Paint.Align.CENTER);
+        if (stepNum == 1) {
+            textPaint.setColor(grey);
+        } else {
+            textPaint.setColor(light);
+        }
+        canvas.drawText(stepInfo.get(1), width / 2, textBaseLine, textPaint);
+        textPaint.setTextAlign(Paint.Align.RIGHT);
+        if (stepNum == 3) {
+            textPaint.setColor(light);
+        } else {
+            textPaint.setColor(grey);
+        }
+        canvas.drawText(stepInfo.get(2), width - padding, textBaseLine, textPaint);
 
 
     }
+
 
 }

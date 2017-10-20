@@ -12,11 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     PView pView1;
     PView pView2;
     PView pView3;
     PView pView4;
+    ThreeStepProgressView tsp;
     EditText editText;
 
     @Override
@@ -38,6 +42,13 @@ public class MainActivity extends AppCompatActivity {
         pView2 = (PView) findViewById(R.id.pv_2);
         pView3 = (PView) findViewById(R.id.pv_3);
         pView4 = (PView) findViewById(R.id.pv_4);
+        tsp = (ThreeStepProgressView) findViewById(R.id.tsp);
+        List<String> strings = new ArrayList<>();
+        strings.add("盒子问");
+        strings.add("海贼团");
+        strings.add("五彩池");
+        tsp.setStepInfo(strings);
+        tsp.setStepNum(2);
         editText = (EditText) findViewById(R.id.tv_0);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
